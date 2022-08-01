@@ -52,6 +52,8 @@ func runMain() error {
 		return err
 	}
 
+	fmt.Printf("Output directory: %s\n", tmpDir)
+
 	for emoji, url := range emojis {
 		if strings.HasPrefix(url, "alias:") {
 			continue
@@ -62,7 +64,6 @@ func runMain() error {
 		}
 	}
 
-	fmt.Printf("Output directory: %s\n", tmpDir)
 	return nil
 }
 
