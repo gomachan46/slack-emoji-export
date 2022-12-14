@@ -16,7 +16,8 @@ import (
 )
 
 var (
-	help = flag.Bool("help", false, "show help")
+	help       = flag.Bool("help", false, "show help")
+	noDownload = flag.Bool("n", false, "no download, get image url only")
 )
 
 type config struct {
@@ -52,15 +53,21 @@ func runMain() error {
 		return err
 	}
 
-	fmt.Printf("Output directory: %s\n", tmpDir)
+	if !*noDownload {
+		fmt.Printf("Output directory: %s\n", tmpDir)
+	}
 
 	for emoji, url := range emojis {
 		if strings.HasPrefix(url, "alias:") {
 			continue
 		}
 
-		if err := download(url, filepath.Join(tmpDir, fmt.Sprintf("%s.png", emoji))); err != nil {
-			return err
+		if *noDownload {
+			fmt.Printf(":%s:, %s\n", emoji, url)
+		} else {
+			if err := download(url, filepath.Join(tmpDir, fmt.Sprintf("%s.png", emoji))); err != nil {
+				return err
+			}
 		}
 	}
 
