@@ -53,7 +53,9 @@ func runMain() error {
 		return err
 	}
 
-	if !*noDownload {
+	if *noDownload {
+		fmt.Printf("emoji,url\n")
+	} else {
 		fmt.Printf("Output directory: %s\n", tmpDir)
 	}
 
@@ -63,7 +65,7 @@ func runMain() error {
 		}
 
 		if *noDownload {
-			fmt.Printf(":%s:, %s\n", emoji, url)
+			fmt.Printf(":%s:,%s\n", emoji, url)
 		} else {
 			if err := download(url, filepath.Join(tmpDir, fmt.Sprintf("%s.png", emoji))); err != nil {
 				return err
